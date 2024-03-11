@@ -46,13 +46,7 @@ let routes = [
 		component: () => import('../views/carnets/carnets.vue'),
 	},
 	{
-		path: '/carnets/byville',
-		name: 'Carnets_ville',
-		layout: "dashboard",
-		component: () => import('../views/carnets/carnets_ville.vue'),
-	},
-	{
-		path: '/carnets/detail/:id',
+		path: '/carnets/:id',
 		name: 'Carnets_detail',
 		layout: "dashboard",
 		component: () => import('../views/carnets/detail_carnet.vue'),
@@ -197,12 +191,6 @@ let routes = [
 		component: () => import('../views/clients/new.vue'),
 	},
 	{
-		path: '/client/notification',
-		name: 'Client_notification',
-		layout: "dashboard",
-		component: () => import('../views/clients/message.vue'),
-	},
-	{
 		path: '/client/classement',
 		name: 'Client_classement',
 		layout: "dashboard",
@@ -225,6 +213,13 @@ let routes = [
 		name: 'Client_carnet_end',
 		layout: "dashboard",
 		component: () => import('../views/clients/end.vue'),
+	},
+	
+	{
+		path: '/client/notification',
+		name: 'Client_notification',
+		layout: "dashboard",
+		component: () => import('../views/clients/message.vue'),
 	},
 	/// agence agent route
 	{
@@ -331,6 +326,18 @@ let routes = [
 		component: () => import('../views/agences/detail.vue'),
 	},
 	{
+		path: '/agence/carnet/:id',
+		name: 'Agence_carnet_detail',
+		layout: "dashboard",
+		component: () => import('../views/agences/carnet.vue'),
+	},
+	{
+		path: '/agence/client/:id',
+		name: 'Agence_client_detail',
+		layout: "dashboard",
+		component: () => import('../views/agences/client.vue'),
+	},
+	{
 		path: '/agence/:id/depot',
 		name: 'Agence_depot',
 		layout: "dashboard",
@@ -350,6 +357,24 @@ let routes = [
 	},
 	/// admin & local route
 	{
+		path: '/retrait',
+		name: 'Retrait',
+		layout: "dashboard",
+		component: () => import('../views/retrait/liste.vue'),
+	},
+	{
+		path: '/tax',
+		name: 'Tax',
+		layout: "dashboard",
+		component: () => import('../views/tax/liste.vue'),
+	},
+	{
+		path: '/tax/:id',
+		name: 'Tax_detail',
+		layout: "dashboard",
+		component: () => import('../views/tax/detail.vue'),
+	},
+	{
 		path: '/chef_agence',
 		name: 'Chef_agence',
 		layout: "dashboard",
@@ -366,24 +391,6 @@ let routes = [
 		name: 'Chef_agence_historique',
 		layout: "dashboard",
 		component: () => import('../views/chef_agence/historique.vue'),
-	},
-	{
-		path: '/controle',
-		name: 'Controle_list',
-		layout: "dashboard",
-		component: () => import('../views/controle/controle.vue'),
-	},
-	{
-		path: '/controle/:id',
-		name: 'Controle_detail',
-		layout: "dashboard",
-		component: () => import('../views/controle/liste.vue'),
-	},
-	{
-		path: '/controleview/:id',
-		name: 'Controle_view',
-		layout: "dashboard",
-		component: () => import('../views/controle/detail.vue'),
 	},
 	{
 		path: '/deploiement',
@@ -459,6 +466,25 @@ let routes = [
 		name: 'Launship_point',
 		layout: "dashboard",
 		component: () => import('../views/launship/point.vue'),
+	},
+	
+	{
+		path: '/controle',
+		name: 'Controle_list',
+		layout: "dashboard",
+		component: () => import('../views/controle/controle.vue'),
+	},
+	{
+		path: '/controle/:id',
+		name: 'Controle_detail',
+		layout: "dashboard",
+		component: () => import('../views/controle/liste.vue'),
+	},
+	{
+		path: '/controleview/:id',
+		name: 'Controle_view',
+		layout: "dashboard",
+		component: () => import('../views/controle/detail.vue'),
 	},
 	{
 		path: '*',

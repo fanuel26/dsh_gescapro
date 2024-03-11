@@ -4,8 +4,7 @@
 	<a-layout-header>
 		<div class="header-col header-brand">
 			<router-link :to="{name: 'Dashboard'}">
-				<!-- <img src="/images/logo1.png" class="img-fluid w-100 h-75" alt=""/> -->
-				<h3 class="text-primary mt-2">DSH</h3>
+				<img src="/images/logo1.png" class="img-fluid w-100 h-75" alt=""/>
 			</router-link>
 
 			<!-- Trigger Button For Navigation Menu For Small Screens -->

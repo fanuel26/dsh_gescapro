@@ -62,13 +62,20 @@
           >
             <a-row :gutter="24">
               <!-- Billing Information Column -->
-              <a-col :span="24" :md="16">
+              
+              <a-col :span="24" :md="4">
+                <a-button type="primary" @click="selectAll()" class="mt-4">Select All</a-button>
+                <a-button @click="removeAll()" class="mt-4" style="margin-left: 10px">Remove All</a-button>
+              </a-col>
+
+              <a-col :span="24" :md="14">
                 <a-form-item label="Selectionnez le carnet">
                   <a-select
                     placeholder="Selectionnez le carnet"
                     mode="multiple"
                     option-label-prop="label"
                     @search="fetchUser"
+                    :value="carnet"
                     :filter-option="false"
                     :not-found-content="fetching ? undefined : null"
                     @change="handleChange"
@@ -88,7 +95,7 @@
                 </a-form-item>
               </a-col>
 
-              <a-col :span="24" :md="8">
+              <a-col :span="24" :md="6">
                 <a-form-item class="" label="Code secret" :colon="false">
                   <a-input
                     v-decorator="[
@@ -511,6 +518,19 @@ export default {
       console.log(value);
       this.carnet = value;
       this.carnets = this.carnets_d;
+    },
+
+    selectAll() {
+      this.carnet = [];
+      this.carnets.forEach(item => {
+        this.carnet.push(item.id)
+      });
+
+      console.log(this.carnet)
+    },
+
+    removeAll() {
+      this.carnet = [];
     },
 
     fetchUser(value) {

@@ -216,6 +216,72 @@
                 </div>
               </a-form>
             </a-col>
+
+            
+            <a-col :span="12" :md="12" class="mb-24">
+              <!-- Profile Information Card -->
+
+              <template>
+                <h6 class="font-semibold m-0">Définir le frais carnet</h6>
+              </template>
+              <a-form
+                id="components-form-demo-normal-login"
+                :form="form_carnet"
+                class="login-form"
+                @submit="fraisSubmit"
+                :hideRequiredMark="true"
+              >
+                <a-form-item
+                  class=""
+                  label="Frais carnet"
+                  :colon="false"
+                >
+                  <a-input
+                    v-decorator="[
+                      'frais',
+                      {
+                        initialValue: frais,
+                        rules: [
+                          {
+                            required: true,
+                            message: 'Frais carnet incorrect!',
+                          },
+                        ],
+                      },
+                    ]"
+                    type="text"
+                    placeholder="Frais du carnet"
+                  />
+                </a-form-item>
+
+                <a-form-item class="" label="Code secret" :colon="false">
+                  <a-input
+                    v-decorator="[
+                      'code_secret',
+                      {
+                        rules: [
+                          {
+                            required: true,
+                            message: 'Code secret incorrect!',
+                          },
+                        ],
+                      },
+                    ]"
+                    type="text"
+                    placeholder="Code secret"
+                  />
+                </a-form-item>
+                <div class="mb-4 text-right">
+                  <a-button
+                    type="primary"
+                    html-type="submit"
+                    class="login-form-button"
+                  >
+                    Changer le frais carnet
+                  </a-button>
+                </div>
+              </a-form>
+            </a-col>
           </a-row>
         </a-card>
       </a-col>
@@ -324,6 +390,7 @@ export default {
       name: "normal_login",
     });
     this.form_password = this.$form.createForm(this, { name: "normal_login" });
+    this.form_carnet = this.$form.createForm(this, { name: "fraiscarnet" });
   },
   data() {
     return {
@@ -376,6 +443,40 @@ export default {
           flash(response.body.message, "Erreur", "fa fa-times", "danger");
         }
       );
+    },
+
+    fraisSubmit(e) {
+      e.preventDefault();
+      this.form_carnet.validateFields((err, values) => {
+        if (!err) {
+          console.log(values);
+          let data = {
+            "carnet_frais":250
+          }
+
+          let session = localStorage;
+          this.token_admin = session.getItem("token");
+
+          let headers = { headers: { Authorization: this.token_admin } };
+
+          this.$http.post(`${this.callback}/v4/update-carnet/carnet_frais`, data, headers).then(
+            (response) => {
+              let data = response.body.data;
+
+              console.log(data);
+              
+                    this.showAlert(
+                      "success",
+                      "Success",
+                      `Frais carnet mise a jour avec success`
+                    );
+            },
+            (response) => {
+              flash(response.body.message, "Erreur", "fa fa-times", "danger");
+            }
+          );
+
+        }});
     },
 
     codeSubmit(e) {

@@ -220,11 +220,13 @@ export default {
               if (dd[i].id_pack == 1) {
                 n_e = n_e + 1;
 
+                console.log(dd[i].id)
                 this.stats[0].value = n_e;
                 this.carnets.push({
                   title: `${dd[i].carnet.libelle.substr(0, 30)} ..., N° ${
                     dd[i].ids
                   }`,
+                  id: dd[i].id,
                   description: `Nbr de cotisation: ${
                     dd[i].nbcotisattion
                   } | Prix du carnet: ${

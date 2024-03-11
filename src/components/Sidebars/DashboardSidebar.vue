@@ -19,9 +19,8 @@
     <div class="brand">
       <router-link :to="{ name: 'Dashboard' }"
         >
-        
 				<!-- <img src="/images/logo1.png" class="img-fluid w-100 h-75" alt=""/> -->
-				<h3 class="text-primary">DSH</h3>
+				<h3 class="text-primary">{{ namAppView }}</h3>
         </router-link>
     </div>
     <hr />
@@ -188,8 +187,8 @@
           <span class="label">Epargnes</span>
         </router-link>
       </a-menu-item>
-      <!-- <a-menu-item>
-        <router-link :to="{ name: 'Pret' }">
+      <a-menu-item>
+        <router-link :to="{ name: 'Retrait' }">
           <span class="icon">
             <svg
               width="20"
@@ -206,9 +205,17 @@
               />
             </svg>
           </span>
-          <span class="label">Prêts</span>
+          <span class="label">Retrait</span>
+          <a-badge
+            class="mx-2"
+            :number-style="{
+              backgroundColor: '#FE422F',
+              color: '#fff',
+            }"
+            :count="retrait"
+          ></a-badge>
         </router-link>
-      </a-menu-item> -->
+      </a-menu-item>
       <a-menu-item v-if="type.client == true">
         <router-link :to="{ name: 'Client' }">
           <span class="icon">
@@ -423,6 +430,7 @@
           </a-badge>
         </router-link>
       </a-menu-item>
+     
       <!-- <a-menu-item v-if="type.controle == true">
         <router-link :to="{ name: 'Controle_list' }">
           <span class="icon">
@@ -505,6 +513,28 @@
         </router-link>
       </a-menu-item>
       <a-menu-item class="menu-item-header"> CARNETS & LIVRAISONS </a-menu-item>
+       
+      <a-menu-item>
+        <router-link :to="{ name: 'Tax' }">
+          <span class="icon">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M6 2C5.44772 2 5 2.44772 5 3V4H4C2.89543 4 2 4.89543 2 6V16C2 17.1046 2.89543 18 4 18H16C17.1046 18 18 17.1046 18 16V6C18 4.89543 17.1046 4 16 4H15V3C15 2.44772 14.5523 2 14 2C13.4477 2 13 2.44772 13 3V4H7V3C7 2.44772 6.55228 2 6 2ZM6 7C5.44772 7 5 7.44772 5 8C5 8.55228 5.44772 9 6 9H14C14.5523 9 15 8.55228 15 8C15 7.44772 14.5523 7 14 7H6Z"
+                fill="#111827"
+              />
+            </svg>
+          </span>
+          <span class="label">Taxe carnet</span>
+        </router-link>
+      </a-menu-item>
       <a-menu-item v-if="type.launship == true">
         <router-link :to="{ name: 'Livraison' }">
           <span class="icon">
@@ -678,10 +708,14 @@ export default {
   data() {
     return {
       callback: process.env.VUE_APP_API_BASE_URL,
+      
+      namAppView: process.env.VUE_APP_NAME_VIEW,
+      
       token_admin: null,
       // sidebarCollapsedModel: this.sidebarCollapsed,
       type: {},
       statistique: {},
+      retrait: 0,
       trans: null,
     };
   },
@@ -733,6 +767,18 @@ export default {
           this.trans == data.length;
         }
       });
+
+      this.$http
+        .post(
+          `${this.callback}/v4/list/transaction/request`,
+          { all: true, state: false },
+          headers
+        )
+        .then(
+          (response) => {
+            let data = response.body.data;
+            this.retrait = data.length;
+          });
   },
 };
 </script>

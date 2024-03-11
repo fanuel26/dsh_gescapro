@@ -82,6 +82,7 @@
             </div>
 
             <a-button size="small" @click="showModal(item)">Detail</a-button>
+            <a-button size="small" type="primary" class="mx-2" @click="showModalR(item)">Retrait</a-button>
           </div>
         </template>
       </a-list-item>
@@ -95,6 +96,17 @@
       @cancel="handleCancel"
     >
       <a-table :columns="columns" :data-source="data_f"></a-table>
+    </a-modal>
+
+    
+    <a-modal
+      :visible="visible_r"
+      width="1000px"
+      title="Liste des retraits"
+      @ok="handleOk"
+      @cancel="handleCancel"
+    >
+      <a-table :columns="columns_r" :data-source="data_r"></a-table>
     </a-modal>
   </a-card>
   <!-- / Your Transactions Card -->
@@ -117,8 +129,10 @@ export default {
       id: null,
       status: false,
       visible_m: false,
+      visible_r: false,
       columns: [],
       data_f: [],
+      data_r: [],
     };
   },
 
@@ -145,6 +159,51 @@ export default {
         dataIndex: "total",
         key: "total",
       },
+    ];
+
+    
+    this.columns_r = [
+      {
+        title: "Date de creation",
+        dataIndex: "created_at",
+        key: "created_at",
+        scopedSlots: { customRender: "name" },
+      },
+      {
+        title: "Carnet",
+        dataIndex: "carnet",
+        key: "carnet",
+      },
+      // {
+      //   title: "Agence",
+      //   dataIndex: "agence",
+      //   key: "agence",
+      // },
+      {
+        title: "Caissier",
+        dataIndex: "agent",
+        key: "agent",
+      },
+      {
+        title: "Nom client",
+        dataIndex: "nom",
+        key: "nom",
+      },
+      {
+        title: "N° de téléphone",
+        dataIndex: "numero",
+        key: "numero",
+      },
+      {
+        title: "Montant (Fcfa)",
+        dataIndex: "montant",
+        key: "montant",
+      },
+      // {
+      //   title: "Action",
+      //   key: "Action",
+      //   scopedSlots: { customRender: "operation" },
+      // },
     ];
   },
   methods: {
@@ -265,13 +324,54 @@ export default {
       this.visible_m = true;
     },
 
+    showModalR(data) {
+      console.log(data.id)
+      let session = localStorage;
+      this.token_admin = session.getItem("token");
+
+      let headers = { headers: { Authorization: this.token_admin } };
+
+      this.$http
+        .post(
+          `${this.callback}/v4/list/retrait/by/carnet`,
+          { id_packclient: data.id },
+          headers
+        )
+        .then(
+          (response) => {
+            let data = response.body.data;
+
+            this.data_r = [];
+            console.log(data);
+            for (let i = 0; i < data.length; i++) {
+              this.data_r.push({
+                key: data[i].id,
+                created_at: new Date(data[i].created_at).toLocaleString(),
+                agent: `${data[i].agent.nom} ${data[i].agent.prenom}`,
+                // agence: data[i].agent.agence.nom_agence,
+                carnet: `${data[i].carnet.carnet.libelle}`,
+                nom: `${data[i].carnet.client.nom} ${data[i].carnet.client.prenom}`,
+                numero: `(+228) ${data[i].carnet.client.numero}`,
+                montant: data[i].amount,
+              });
+            }
+          },
+          (response) => {
+            this.showAlert("error", "Erreur", response.body.message);
+          }
+        );
+      this.visible_r = true;
+    },
+
     handleOk() {
       console.log("fermer");
       this.visible_m = false;
+      this.visible_r = false;
     },
 
     handleCancel(e) {
       this.visible_m = false;
+      this.visible_r = false;
     },
   },
 };

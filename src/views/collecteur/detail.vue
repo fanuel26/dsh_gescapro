@@ -168,7 +168,7 @@
             <h6 class="font-semibold m-0">Photo de profile</h6>
           </template>
           <div style="padding-bottom: 10px;">
-            <a-upload class="mb-4" name="file" action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            <a-upload class="mb-4" name="file"
               :headers="headers" @change="handleChange">
               <a-button>
                 <upload-outlined></upload-outlined>
@@ -624,7 +624,7 @@ export default {
 
       // let headers = {};
       this.$http
-        .post(`${callbackProfile}/upload`, body)
+        .post(`${this.callbackProfile}/upload`, body)
         .then(
           (response) => {
             let data = response.body;

@@ -8,7 +8,7 @@
 				<!-- Footer Copyright Notice -->
 				<p class="copyright text-center">
 					© 2022, Copyright
-					by <a href="https://gescapro.net" target="_blank">gescapro</a>
+					by <a href="https://gescapro.net" target="_blank">GESCAPRO</a>
 				</p>
 				<!-- / Footer Copyright Notice -->
 

@@ -8,10 +8,24 @@
     <div v-if="type.dashboard === true">
       <!-- Counter Widgets -->
       <a-row :gutter="24">
-        <a-col :xs="24" :sm="24" :md="12" :lg="8" class="mb-24" v-for="(stat, index) in stats" :key="index">
+        <a-col
+          :xs="24"
+          :sm="24"
+          :md="12"
+          :lg="8"
+          class="mb-24"
+          v-for="(stat, index) in stats"
+          :key="index"
+        >
           <!-- Widget 1 Card -->
-          <WidgetCounter :title="stat.title" :value="stat.value" :prefix="stat.prefix" :suffix="stat.suffix"
-            :icon="stat.icon" :status="stat.status"></WidgetCounter>
+          <WidgetCounter
+            :title="stat.title"
+            :value="stat.value"
+            :prefix="stat.prefix"
+            :suffix="stat.suffix"
+            :icon="stat.icon"
+            :status="stat.status"
+          ></WidgetCounter>
           <!-- / Widget 1 Card -->
         </a-col>
       </a-row>
@@ -24,22 +38,41 @@
           <!-- <CardBarChart></CardBarChart> -->
           <!-- Active Users Card -->
 
-          <a-card :bordered="false" class="header-solid h-full" style="height: 500px; overflow-y: auto;"
-            :bodyStyle="{ paddingTop: '12px' }">
+          <a-card
+            :bordered="false"
+            class="header-solid h-full"
+            style="height: 500px; overflow-y: auto"
+            :bodyStyle="{ paddingTop: '12px' }"
+          >
             <template #title>
               <div class="d-flex justify-content-between align-items-start">
-                <h6>Deversement encour dans les agences <strong style="color: #1890ff">( {{ Agences.length }}
-                    )</strong></h6>
+                <h6>
+                  Deversement encour dans les agences
+                  <strong style="color: #1890ff"
+                    >( {{ Agences.length }} )</strong
+                  >
+                </h6>
               </div>
             </template>
 
-            <div class="d-flex justify-content-center align-items-center" style="height: 300px;" v-if="load">
+            <div
+              class="d-flex justify-content-center align-items-center"
+              style="height: 300px"
+              v-if="load"
+            >
               <a-spin v-if="load" size="large" tip="Chargement..." />
             </div>
             <a-timeline>
               <a-timeline-item v-for="ag in Agences" :key="ag" color="red">
                 {{ ag.nom_agence }}
-                <p><a class="text-primary" style="cursor: pointer;" @click="showModal(ag.id)">cliquer ici</a> </p>
+                <p>
+                  <a
+                    class="text-primary"
+                    style="cursor: pointer"
+                    @click="showModal(ag.id)"
+                    >cliquer ici</a
+                  >
+                </p>
               </a-timeline-item>
             </a-timeline>
           </a-card>
@@ -49,26 +82,50 @@
           <!-- <CardLineChart></CardLineChart> -->
           <!-- / Sales Overview Card -->
 
-          <a-card :bordered="false" class="header-solid h-full" style="height: 500px; overflow-y: auto;"
-            :bodyStyle="{ paddingTop: '12px' }">
+          <a-card
+            :bordered="false"
+            class="header-solid h-full"
+            style="height: 500px; overflow-y: auto"
+            :bodyStyle="{ paddingTop: '12px' }"
+          >
             <template #title>
               <div class="d-flex justify-content-between align-items-start">
-                <h6>Collecteurs inactifs du jour <strong style="color: #1890ff">( {{ nb_dataCollecteur_inactif }}
-                    )</strong></h6>
-                <a-button @click="listeCollecteur()" size="small">Lancer</a-button>
+                <h6>
+                  Collecteurs inactifs du jour
+                  <strong style="color: #1890ff"
+                    >( {{ nb_dataCollecteur_inactif }} )</strong
+                  >
+                </h6>
+                <a-button @click="listeCollecteur()" size="small"
+                  >Lancer</a-button
+                >
               </div>
             </template>
 
-            <div class="d-flex justify-content-center align-items-center" style="height: 300px;" v-if="load">
-              <a-spin v-if="load" size="large" tip="Chargement..." />
+            <div
+              class="d-flex justify-content-center align-items-center"
+              style="height: 300px"
+              v-if="loader"
+            >
+              <a-spin v-if="loader" size="large" tip="Chargement..." />
             </div>
             <a-timeline>
-              <a-timeline-item v-for="dc in dataCollecteur_inactif" :key="dc" color="red">
+              <a-timeline-item
+                v-for="dc in dataCollecteur_inactif"
+                :key="dc"
+                color="red"
+              >
                 {{ dc.nom }} {{ dc.prenom }}
-              <p><strong style="color: #000">{{ dc.collecte_journalier }}</strong> mises | <strong
-                  style="color: #000">{{ dc.collecte_encour }}</strong> Fcfa non deversé</p>
-            </a-timeline-item>
-          </a-timeline>
+                <p>
+                  <strong style="color: #000">{{
+                    dc.collecte_journalier
+                  }}</strong>
+                  mises |
+                  <strong style="color: #000">{{ dc.collecte_encour }}</strong>
+                  Fcfa non deversé
+                </p>
+              </a-timeline-item>
+            </a-timeline>
             <!-- <div class="d-flex justify-content-end" v-if="dataCollecteur_vente_jour !== null">
                               <router-link :to="{ name: 'Classement_collecteur' }">
                                 <a-button type="primary" size="small">Voire plus</a-button>
@@ -81,25 +138,47 @@
           <!-- <CardLineChart></CardLineChart> -->
           <!-- / Sales Overview Card -->
 
-          <a-card :bordered="false" class="header-solid h-full" style="height: 500px; overflow-y: auto;"
-            :bodyStyle="{ paddingTop: '12px' }">
+          <a-card
+            :bordered="false"
+            class="header-solid h-full"
+            style="height: 500px; overflow-y: auto"
+            :bodyStyle="{ paddingTop: '12px' }"
+          >
             <template #title>
               <div class="d-flex justify-content-between align-items-start">
-                <h6>Collecteurs gros miseur unique <strong style="color: #1890ff">( {{ nb_dataCollecteur_actif }}
-                    )</strong></h6>
+                <h6>
+                  Collecteurs gros miseur unique
+                  <strong style="color: #1890ff"
+                    >( {{ nb_dataCollecteur_actif }} )</strong
+                  >
+                </h6>
               </div>
             </template>
             <a-timeline>
-              <a-timeline-item v-for="dc in dataCollecteur_actif" :key="dc" color="green">
+              <a-timeline-item
+                v-for="dc in dataCollecteur_actif"
+                :key="dc"
+                color="green"
+              >
                 {{ dc.nom }} {{ dc.prenom }}
-                <p><strong style="color: #000">{{ dc.collecte_journalier }}</strong> mises | <strong
-                    style="color: #000">{{ dc.collecte_encour }}</strong> Fcfa non deversé</p>
+                <p>
+                  <strong style="color: #000">{{
+                    dc.collecte_journalier
+                  }}</strong>
+                  mises |
+                  <strong style="color: #000">{{ dc.collecte_encour }}</strong>
+                  Fcfa non deversé
+                </p>
               </a-timeline-item>
             </a-timeline>
 
-          <div class="d-flex justify-content-center align-items-center" style="height: 300px;" v-if="load">
-            <a-spin v-if="load" size="large" tip="Chargement..." />
-          </div>
+            <div
+              class="d-flex justify-content-center align-items-center"
+              style="height: 300px"
+              v-if="loader"
+            >
+              <a-spin v-if="loader" size="large" tip="Chargement..." />
+            </div>
             <!-- <div class="d-flex justify-content-end" v-if="dataCollecteur_vente_jour !== null">
                               <router-link :to="{ name: 'Classement_collecteur' }">
                                 <a-button type="primary" size="small">Voire plus</a-button>
@@ -110,17 +189,30 @@
       </a-row>
       <!-- / Charts -->
 
-
-      <a-modal :width="width" title="Deversement encour dans les agences" :visible="visible" @cancel="handleCancel"
-        :confirm-loading="confirmLoading" @ok="handleOk">
+      <a-modal
+        :width="width"
+        title="Deversement encour dans les agences"
+        :visible="visible"
+        @cancel="handleCancel"
+        :confirm-loading="confirmLoading"
+        @ok="handleOk"
+      >
         <a-row type="flex" :gutter="24">
           <!-- Billing Information Column -->
-          <a-col :span="24" :md="24" class="mt-4 d-flex justify-content-center" v-if="load_m == true">
+          <a-col
+            :span="24"
+            :md="24"
+            class="mt-4 d-flex justify-content-center"
+            v-if="load_m == true"
+          >
             <a-spin size="large" />
           </a-col>
           <a-col :span="24" :md="24" class="mt-4" v-if="load_m == false">
             <p class="text-center">Deversement encour:</p>
-            <a-card :bordered="false" class="card-billing-info d-flex justify-content-center">
+            <a-card
+              :bordered="false"
+              class="card-billing-info d-flex justify-content-center"
+            >
               <h3 class="text-center">{{ somme_deverse }} Fcfa</h3>
             </a-card>
           </a-col>
@@ -132,25 +224,37 @@
         <!-- Table -->
         <a-col :span="24" :lg="12" class="mb-24">
           <!-- Projects Table Card -->
-          <a-card :bordered="false" class="header-solid h-full" :bodyStyle="{ paddingTop: '12px' }">
+          <a-card
+            :bordered="false"
+            class="header-solid h-full"
+            :bodyStyle="{ paddingTop: '12px' }"
+          >
             <template #title>
               <div class="d-flex justify-content-between align-items-start">
                 <h6>Carnets les plus vendus par ville</h6>
 
                 <a-form-item class="" :colon="false">
-                  <a-select style="width: 300px" v-decorator="[
-                    'ville',
-                    {
-                      initialValue: ville,
-                      rules: [
-                        {
-                          required: true,
-                          message: 'ville est vide!',
-                        },
-                      ],
-                    },
-                  ]" @change="listeCarnet">
-                    <a-select-option v-for="ville in villes" :value="ville.id" :key="ville.id">
+                  <a-select
+                    style="width: 300px"
+                    v-decorator="[
+                      'ville',
+                      {
+                        initialValue: ville,
+                        rules: [
+                          {
+                            required: true,
+                            message: 'ville est vide!',
+                          },
+                        ],
+                      },
+                    ]"
+                    @change="listeCarnet"
+                  >
+                    <a-select-option
+                      v-for="ville in villes"
+                      :value="ville.id"
+                      :key="ville.id"
+                    >
                       {{ ville.libelle }}
                     </a-select-option>
                   </a-select>
@@ -158,103 +262,66 @@
               </div>
             </template>
             <a-timeline>
-              <a-timeline-item v-for="dc in dataCarnetsVilles" :key="dc" color="green">
+              <a-timeline-item
+                v-for="dc in dataCarnetsVilles"
+                :key="dc"
+                color="green"
+              >
                 {{ dc.libelle }}
                 <p>{{ dc.vendu }} ventes</p>
               </a-timeline-item>
             </a-timeline>
-            <div class="d-flex justify-content-center align-items-center" style="height: 300px;"
-              v-if="dataCarnetsVilles !== null && dataCarnetsVilles.length == 0">
+            <div
+              class="d-flex justify-content-center align-items-center"
+              style="height: 300px"
+              v-if="dataCarnetsVilles !== null && dataCarnetsVilles.length == 0"
+            >
               <p>Aucune donnée</p>
             </div>
-            <div class="d-flex justify-content-end" v-if="dataCarnetsVilles !== null && dataCarnetsVilles.length > 0">
+            <div
+              class="d-flex justify-content-end"
+              v-if="dataCarnetsVilles !== null && dataCarnetsVilles.length > 0"
+            >
               <router-link :to="{ name: 'Classement_carnet' }">
                 <a-button type="primary" size="small">Voire plus</a-button>
               </router-link>
             </div>
           </a-card>
           <!-- / Projects Table Card -->
-      </a-col>
-      <!-- / Table -->
-
-      <!-- Timeline -->
-      <!-- <a-col :span="24" :lg="12" class="mb-24">
-          <a-card :bordered="false" class="header-solid h-full" :bodyStyle="{ paddingTop: '12px' }">
-            <template #title>
-              <div class="d-flex justify-content-between align-items-start">
-                <h6>Carnets les plus vendus par agences</h6>
-
-                <a-form-item class="" :colon="false">
-                  <a-select style="width: 300px" v-decorator="[
-                    'agence',
-                    {
-                      initialValue: agence,
-                      rules: [
-                        {
-                          required: true,
-                          message: 'agence est vide!',
-                        },
-                      ],
-                    },
-                  ]" @change="listeCarnetAgence">
-                    <a-select-option v-for="agence in Agences" :value="agence.id" :key="agence.id">
-                      {{ agence.nom_agence }}
-                    </a-select-option>
-                  </a-select>
-                </a-form-item>
-              </div>
-            </template>
-            <a-timeline>
-              <a-timeline-item v-for="dc in dataCarnetsAgences" :key="dc" color="green">
-                {{ dc.libelle }}
-                <p>{{ dc.vendu }} ventes</p>
-              </a-timeline-item>
-            </a-timeline>
-            <div class="d-flex justify-content-end" v-if="dataCarnetsAgences !== null">
-              <router-link :to="{ name: 'Classement_carnet' }">
-                                <a-button type="primary" size="small">Voire plus</a-button>
-                              </router-link>
-                            </div>
-                          </a-card>
-                        </a-col> -->
+        </a-col>
+        <!-- / Table -->
 
         <a-col :span="24" :lg="12" class="mb-24">
           <!-- Orders History Timeline Card -->
 
           <!-- Orders History Timeline Card -->
-          <a-card :bordered="false" class="header-solid h-full" :bodyStyle="{ paddingTop: '12px' }">
-          <template #title>
-            <div class="d-flex justify-content-between align-items-start">
-              <h6>Vendeurs du jour</h6>
-
-              <!-- <a-form-item class="" :colon="false">
-                  <a-select style="width: 300px" v-decorator="[
-                    'agence',
-                    {
-                      initialValue: agence,
-                      rules: [
-                        {
-                          required: true,
-                          message: 'agence est vide!',
-                        },
-                      ],
-                    },
-                  ]" @change="listeCarnetAgence">
-                                    <a-select-option v-for="agence in Agences" :value="agence.id" :key="agence.id">
-                                      {{ agence.nom_agence }}
-                                    </a-select-option>
-                                  </a-select>
-                                </a-form-item> -->
+          <a-card
+            :bordered="false"
+            class="header-solid h-full"
+            :bodyStyle="{ paddingTop: '12px' }"
+          >
+            <template #title>
+              <div class="d-flex justify-content-between align-items-start">
+                <h6>Vendeurs du jour</h6>
               </div>
             </template>
             <a-timeline>
-              <a-timeline-item v-for="dc in dataCollecteur_vente_jour" :key="dc" color="green">
+              <a-timeline-item
+                v-for="dc in dataCollecteur_vente_jour"
+                :key="dc"
+                color="green"
+              >
                 {{ dc.nom }} | +228 {{ dc.numero }}
-                <p style="color: #E76F00; font-size: 13px"><strong>{{ dc.carnet_vendu_jour }}</strong> carnets vendus</p>
+                <p style="color: #e76f00; font-size: 13px">
+                  <strong>{{ dc.carnet_vendu_jour }}</strong> carnets vendus
+                </p>
                 <small>{{ dc.agence }}</small>
               </a-timeline-item>
             </a-timeline>
-            <div class="d-flex justify-content-end" v-if="dataCollecteur_vente_jour !== null">
+            <div
+              class="d-flex justify-content-end"
+              v-if="dataCollecteur_vente_jour !== null"
+            >
               <router-link :to="{ name: 'Classement_collecteur' }">
                 <a-button type="primary" size="small">Voire plus</a-button>
               </router-link>
@@ -272,8 +339,14 @@
         <!-- Table -->
         <a-col :span="24" :lg="16" class="mb-24">
           <!-- Projects Table Card -->
-          <CardProjectTable :data="dataCollecteur" :columns="columnCollecteur" :data_c="dataCollecteur_c"
-            :columns_c="columnCollecteur_c" :data_cli="dataCollecteur_cli" :columns_cli="columnCollecteur_cli">
+          <CardProjectTable
+            :data="dataCollecteur"
+            :columns="columnCollecteur"
+            :data_c="dataCollecteur_c"
+            :columns_c="columnCollecteur_c"
+            :data_cli="dataCollecteur_cli"
+            :columns_cli="columnCollecteur_cli"
+          >
           </CardProjectTable>
           <!-- / Projects Table Card -->
         </a-col>
@@ -284,7 +357,11 @@
           <!-- Orders History Timeline Card -->
 
           <!-- Orders History Timeline Card -->
-          <a-card :bordered="false" class="header-solid h-full" :bodyStyle="{ paddingTop: '12px' }">
+          <a-card
+            :bordered="false"
+            class="header-solid h-full"
+            :bodyStyle="{ paddingTop: '12px' }"
+          >
             <template #title>
               <h6>Carnets les plus vendus</h6>
               <p></p>
@@ -292,7 +369,7 @@
             <a-timeline>
               <a-timeline-item v-for="dc in dataCarnet" :key="dc" color="green">
                 {{ dc.libelle }}
-                <p>{{ dc.vendu }} ventes | {{ dc.tarif }} Fcfa </p>
+                <p>{{ dc.vendu }} ventes | {{ dc.tarif }} Fcfa</p>
               </a-timeline-item>
             </a-timeline>
             <div class="d-flex justify-content-end">
@@ -311,7 +388,11 @@
 
       <a-row :gutter="24" type="flex" align="stretch">
         <a-col :span="24" :xl="24" class="mb-24">
-          <a-card :bordered="false" class="header-solid h-full" :bodyStyle="{ paddingTop: '12px' }">
+          <a-card
+            :bordered="false"
+            class="header-solid h-full"
+            :bodyStyle="{ paddingTop: '12px' }"
+          >
             <template #title>
               <h6>Livraison à 2 mois</h6>
             </template>
@@ -341,10 +422,15 @@
           <!-- Orders History Timeline Card -->
 
           <!-- Orders History Timeline Card -->
-          <a-card :bordered="false"
-            style="height: 75vh;background-image: url('/images/info-card-2.jpg'); background-size: cover;"
-            class="header-solid h-full">
-
+          <a-card
+            :bordered="false"
+            style="
+              height: 75vh;
+              background-image: url('/images/info-card-2.jpg');
+              background-size: cover;
+            "
+            class="header-solid h-full"
+          >
             <div class="card-content" style="padding: 50px">
               <h1 class="text-white">Bienvenue à {{ namApp }}</h1>
             </div>
@@ -392,37 +478,38 @@ export default {
       callback: process.env.VUE_APP_API_BASE_URL,
       namApp: process.env.VUE_APP_NAME,
       token_admin: null,
-      dataCollecteur: null,
+      dataCollecteur: [],
       columnCollecteur: null,
-      dataCollecteur_c: null,
-      columnCollecteur_c: null,
-      dataCollecteur_cli: null,
-      dataCollecteur_vente_jour: null,
+      dataCollecteur_c: [],
+      columnCollecteur_c: [],
+      dataCollecteur_cli: [],
+      dataCollecteur_vente_jour: [],
       columnCollecteur_cli: null,
       columnsCarnet: null,
-      dataCarnets: null,
+      dataCarnets: [],
       ville: null,
       agence: null,
-      villes: null,
-      Agences: null,
-      dataCarnetsVilles: null,
-      dataCarnetsAgences: null,
-      dataCarnet: null,
+      villes: [],
+      Agences: [],
+      dataCarnetsVilles: [],
+      dataCarnetsAgences: [],
+      dataCarnet: [],
       stats: [],
       width: 500,
       timelineReverse: false,
       type: null,
       i: 0,
       dataC: 0,
-      dataCollecteur_inactif: null,
-      dataCollecteur_actif: null,
+      dataCollecteur_inactif: [],
+      dataCollecteur_actif: [],
       nb_dataCollecteur_inactif: 0,
       nb_dataCollecteur_actif: 0,
       somme_deverse: 0,
       confirmLoading: false,
       load: false,
+      loader: false,
       load_m: false,
-      visible: false
+      visible: false,
     };
   },
 
@@ -447,7 +534,7 @@ export default {
         launship: false,
         dashboard: false,
         iAgence: 0,
-        niv: 0
+        niv: 0,
       };
     } else {
       this.type = JSON.parse(t);
@@ -783,13 +870,47 @@ export default {
 							<path fill-rule="evenodd" clip-rule="evenodd" d="M10 2C7.79086 2 6 3.79086 6 6V7H5C4.49046 7 4.06239 7.38314 4.00612 7.88957L3.00612 16.8896C2.97471 17.1723 3.06518 17.455 3.25488 17.6669C3.44458 17.8789 3.71556 18 4 18H16C16.2844 18 16.5554 17.8789 16.7451 17.6669C16.9348 17.455 17.0253 17.1723 16.9939 16.8896L15.9939 7.88957C15.9376 7.38314 15.5096 7 15 7H14V6C14 3.79086 12.2091 2 10 2ZM12 7V6C12 4.89543 11.1046 4 10 4C8.89543 4 8 4.89543 8 6V7H12ZM6 10C6 9.44772 6.44772 9 7 9C7.55228 9 8 9.44772 8 10C8 10.5523 7.55228 11 7 11C6.44772 11 6 10.5523 6 10ZM13 9C12.4477 9 12 9.44772 12 10C12 10.5523 12.4477 11 13 11C13.5523 11 14 10.5523 14 10C14 9.44772 13.5523 9 13 9Z" fill="#111827"/>
 						</svg>`,
       },
+      {
+        title: "Total retrait",
+        value: 0,
+        prefix: "",
+        suffix: "Fcfa",
+        icon: `
+						<svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path fill-rule="evenodd" clip-rule="evenodd" d="M10 2C7.79086 2 6 3.79086 6 6V7H5C4.49046 7 4.06239 7.38314 4.00612 7.88957L3.00612 16.8896C2.97471 17.1723 3.06518 17.455 3.25488 17.6669C3.44458 17.8789 3.71556 18 4 18H16C16.2844 18 16.5554 17.8789 16.7451 17.6669C16.9348 17.455 17.0253 17.1723 16.9939 16.8896L15.9939 7.88957C15.9376 7.38314 15.5096 7 15 7H14V6C14 3.79086 12.2091 2 10 2ZM12 7V6C12 4.89543 11.1046 4 10 4C8.89543 4 8 4.89543 8 6V7H12ZM6 10C6 9.44772 6.44772 9 7 9C7.55228 9 8 9.44772 8 10C8 10.5523 7.55228 11 7 11C6.44772 11 6 10.5523 6 10ZM13 9C12.4477 9 12 9.44772 12 10C12 10.5523 12.4477 11 13 11C13.5523 11 14 10.5523 14 10C14 9.44772 13.5523 9 13 9Z" fill="#111827"/>
+						</svg>`,
+      },
+      {
+        title: "Total retrait du jour",
+        value: 0,
+        prefix: "",
+        suffix: "Fcfa",
+        icon: `
+						<svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path fill-rule="evenodd" clip-rule="evenodd" d="M10 2C7.79086 2 6 3.79086 6 6V7H5C4.49046 7 4.06239 7.38314 4.00612 7.88957L3.00612 16.8896C2.97471 17.1723 3.06518 17.455 3.25488 17.6669C3.44458 17.8789 3.71556 18 4 18H16C16.2844 18 16.5554 17.8789 16.7451 17.6669C16.9348 17.455 17.0253 17.1723 16.9939 16.8896L15.9939 7.88957C15.9376 7.38314 15.5096 7 15 7H14V6C14 3.79086 12.2091 2 10 2ZM12 7V6C12 4.89543 11.1046 4 10 4C8.89543 4 8 4.89543 8 6V7H12ZM6 10C6 9.44772 6.44772 9 7 9C7.55228 9 8 9.44772 8 10C8 10.5523 7.55228 11 7 11C6.44772 11 6 10.5523 6 10ZM13 9C12.4477 9 12 9.44772 12 10C12 10.5523 12.4477 11 13 11C13.5523 11 14 10.5523 14 10C14 9.44772 13.5523 9 13 9Z" fill="#111827"/>
+						</svg>`,
+      },
+      {
+        title: "Total Tax",
+        value: 0,
+        prefix: "",
+        suffix: "Fcfa",
+        icon: `
+						<svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path fill-rule="evenodd" clip-rule="evenodd" d="M10 2C7.79086 2 6 3.79086 6 6V7H5C4.49046 7 4.06239 7.38314 4.00612 7.88957L3.00612 16.8896C2.97471 17.1723 3.06518 17.455 3.25488 17.6669C3.44458 17.8789 3.71556 18 4 18H16C16.2844 18 16.5554 17.8789 16.7451 17.6669C16.9348 17.455 17.0253 17.1723 16.9939 16.8896L15.9939 7.88957C15.9376 7.38314 15.5096 7 15 7H14V6C14 3.79086 12.2091 2 10 2ZM12 7V6C12 4.89543 11.1046 4 10 4C8.89543 4 8 4.89543 8 6V7H12ZM6 10C6 9.44772 6.44772 9 7 9C7.55228 9 8 9.44772 8 10C8 10.5523 7.55228 11 7 11C6.44772 11 6 10.5523 6 10ZM13 9C12.4477 9 12 9.44772 12 10C12 10.5523 12.4477 11 13 11C13.5523 11 14 10.5523 14 10C14 9.44772 13.5523 9 13 9Z" fill="#111827"/>
+						</svg>`,
+      },
     ];
 
     this.statistique();
+    this.retrait();
+    this.tax();
+    this.changeValueDate();
     this.listeVille();
     this.listeAgence();
     this.classementCollecteur();
     this.classementCarnet();
+
     // this.listeCollecteur();
   },
 
@@ -812,50 +933,78 @@ export default {
       );
     },
 
+    changeValueDate() {
+      let date = new Date();
+
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+
+      let session = localStorage;
+      this.token_admin = session.getItem("token");
+
+      let headers = { headers: { Authorization: this.token_admin } };
+
+      this.$http
+        .post(
+          `${this.callback}/v4/total/retire/by/period`,
+          {
+            type: 0, // search by specific day
+            day: day,
+            month: month,
+            year: year,
+          },
+          headers
+        )
+        .then((response) => {
+          let data = response.body;
+
+          console.log(data);
+          this.stats[16].value = data.total;
+        });
+    },
+
     listeAgence() {
       let session = localStorage;
       this.token_admin = session.getItem("token");
 
       let headers = { headers: { Authorization: this.token_admin } };
 
-      this.$http.post(`${this.callback}/agence/list?all=true`, {}, headers).then(
-        (response) => {
-          let data = response.body.data;
+      this.$http
+        .post(`${this.callback}/agence/list?all=true`, {}, headers)
+        .then(
+          (response) => {
+            let data = response.body.data;
 
-          console.log(data)
+            console.log(data);
 
-          this.Agences = data
+            this.Agences = data;
 
-          this.iAgence = 0
-          // this.launchAgenceClassement(this.iAgence, data)
+            this.iAgence = 0;
+            // this.launchAgenceClassement(this.iAgence, data)
 
-          setTimeout(() => {
-            console.log(this.Agences)
-          }, 10000);
-        },
-        (response) => {
-          this.showAlert("error", "Error", response.body.message);
-        }
-      );
+            setTimeout(() => {
+              console.log(this.Agences);
+            }, 10000);
+          },
+          (response) => {
+            this.showAlert("error", "Error", response.body.message);
+          }
+        );
     },
 
     launchAgenceClassement(id, data) {
-
       let session = localStorage;
       this.token_admin = session.getItem("token");
 
       let headers = { headers: { Authorization: this.token_admin } };
-      console.log(data)
-      this.$http.post(`${this.callback}/agence/${data[id].id}/collecteur`,
-        {},
-        headers
-      )
+      console.log(data);
+      this.$http
+        .post(`${this.callback}/agence/${data[id].id}/collecteur`, {}, headers)
         .then(
           (response) => {
             let dt = response.body.data;
-            this.getSomDeversionOfListColelcteur(dt, id, data.length, data)
-
-
+            this.getSomDeversionOfListColelcteur(dt, id, data.length, data);
           },
           (response) => {
             this.showAlert("error", "Erreur", response.body.message);
@@ -864,19 +1013,18 @@ export default {
     },
 
     getSomDeversionOfListColelcteur(data, id, nbrFinal, dataAgence) {
-      this.Agences[id].totalDevers = 0
+      this.Agences[id].totalDevers = 0;
       for (let i = 0; i < data.length; i++) {
-        this.Agences[id].totalDevers += data[i].total_cotisation
+        this.Agences[id].totalDevers += data[i].total_cotisation;
       }
       if (id < nbrFinal) {
         setTimeout(() => {
-          console.log(this.Agences[id])
-          this.iAgence += 1
-          this.launchAgenceClassement(this.iAgence, dataAgence)
+          console.log(this.Agences[id]);
+          this.iAgence += 1;
+          this.launchAgenceClassement(this.iAgence, dataAgence);
         }, 100);
       }
     },
-
 
     statistique() {
       let session = localStorage;
@@ -889,7 +1037,7 @@ export default {
         .then((response) => {
           let data = response.body;
 
-          console.log(data)
+          console.log(data);
 
           this.stats[0].value = data.client_produit;
           this.stats[1].value = data.client_epargne;
@@ -911,33 +1059,40 @@ export default {
         });
 
       this.$http
-        .post(`${this.callback}/v2-upgrade/type_carnet/gain_global`, {}, headers)
+        .post(
+          `${this.callback}/v2-upgrade/type_carnet/gain_global`,
+          {},
+          headers
+        )
         .then((response) => {
           let data = response.body;
 
-          console.log(data)
+          console.log(data);
 
           // this.stats[10].value = data.data;
         });
-      // 
+      //
 
       this.$http
-        .post(`${this.callback}/v2-upgrade/type_carnet/vendu/journaliere`, {}, headers)
+        .post(
+          `${this.callback}/v2-upgrade/type_carnet/vendu/journaliere`,
+          {},
+          headers
+        )
         .then((response) => {
           let data = response.body;
 
-          console.log(data)
+          console.log(data);
 
           this.stats[13].value = data.data;
         });
-
 
       this.$http
         .post(`${this.callback}/v2-upgrade/carnet/supendu/stat`, {}, headers)
         .then((response) => {
           let data = response.body.data;
 
-          console.log(data)
+          console.log(data);
 
           this.stats[12].value = data.count;
           this.stats[11].value = data.amount;
@@ -949,16 +1104,16 @@ export default {
           let data = response.body.data;
           // this.stats[5].value = data.length;
 
-          console.log(data)
+          console.log(data);
 
           this.dataCarnets = [];
           for (let i = 0; i < data.length; i++) {
             if (data[i].nbcotisattion > 31 * 12 - 62) {
               this.dataCarnets.push({
                 key: data[i].id,
-                libelle: data[i].carnet.libelle,
-                nbr_mois: data[i].carnet.period / 31,
-                prix_jour: data[i].carnet.tarif,
+                libelle: data[i].carnet?.libelle,
+                nbr_mois: data[i].carnet?.period / 31,
+                prix_jour: data[i].carnet?.tarif,
                 nbr_cot: data[i].nbcotisattion,
                 nom_client: `${data[i].client.nom} ${data[i].client.prenom}`,
                 numero_client: data[i].client.numero,
@@ -970,6 +1125,36 @@ export default {
         });
     },
 
+    retrait() {
+      let session = localStorage;
+      this.token_admin = session.getItem("token");
+
+      let headers = { headers: { Authorization: this.token_admin } };
+
+      this.$http
+        .post(`${this.callback}/v4/total/retire`, {}, headers)
+        .then((response) => {
+          let data = response.body.total;
+
+          this.stats[15].value = data;
+        });
+    },
+
+    tax() {
+      let session = localStorage;
+      this.token_admin = session.getItem("token");
+
+      let headers = { headers: { Authorization: this.token_admin } };
+
+      this.$http
+        .post(`${this.callback}/v4/total/tax`, {}, headers)
+        .then((response) => {
+          let data = response.body.data;
+
+          this.stats[17].value = data;
+        });
+    },
+
     listeCarnet(id) {
       // alert(id)
       let session = localStorage;
@@ -977,29 +1162,31 @@ export default {
 
       let headers = { headers: { Authorization: this.token_admin } };
 
-
       this.$http
         .post(`${this.callback}/classement/carnet/ville/${id}`, {}, headers)
         .then((response) => {
           let data = response.body.data;
           // this.stats[5].value = data.length;
 
-          console.log(data)
+          console.log(data);
           this.dataCarnetsVilles = [];
           for (let i = 0; i < 10; i++) {
-            this.dataCarnetsVilles.push(data[i]);
-            this.dataCarnetsVilles = this.dataCarnetsVilles.filter(value => value.vendu > 0 ? value : null)
+            if (data[i]) {
+              this.dataCarnetsVilles.push(data[i]);
+              this.dataCarnetsVilles = this.dataCarnetsVilles.filter((value) =>
+                value.vendu > 0 ? value : null
+              );
+            }
           }
         });
     },
 
     listeCarnetAgence(id) {
-      console.log(id)
+      console.log(id);
       let session = localStorage;
       this.token_admin = session.getItem("token");
 
       let headers = { headers: { Authorization: this.token_admin } };
-
 
       this.$http
         .post(`${this.callback}/classement/carnet/agence/${id}`, {}, headers)
@@ -1007,10 +1194,12 @@ export default {
           let data = response.body.data;
           // this.stats[5].value = data.length;
 
-          console.log(data)
+          console.log(data);
           this.dataCarnetsAgences = [];
           for (let i = 0; i < 10; i++) {
-            this.dataCarnetsAgences.push(data[i]);
+            if (data[i]) {
+              this.dataCarnetsAgences.push(data[i]);
+            }
           }
         });
     },
@@ -1037,8 +1226,9 @@ export default {
               nom: `${data[i].nom} ${data[i].prenom}`,
               numero: data[i].numero,
               frais: data[i].compte_agent_collecteur + data[i].total_cotisation,
-              somme: `${data[i].compte_agent_collecteur + data[i].total_cotisation
-                }`,
+              somme: `${
+                data[i].compte_agent_collecteur + data[i].total_cotisation
+              }`,
               agence: data[i].agc_name,
               carnet_vendu: data[i].carnet_vendu,
               client: data[i].nbr_cli,
@@ -1049,8 +1239,9 @@ export default {
               nom: `${data[i].nom} ${data[i].prenom}`,
               numero: data[i].numero,
               frais: data[i].compte_agent_collecteur + data[i].total_cotisation,
-              somme: `${data[i].compte_agent_collecteur + data[i].total_cotisation
-                }`,
+              somme: `${
+                data[i].compte_agent_collecteur + data[i].total_cotisation
+              }`,
               agence: data[i].agc_name,
               carnet_vendu: data[i].carnet_vendu,
               client: data[i].nbr_cli,
@@ -1061,21 +1252,22 @@ export default {
               nom: `${data[i].nom} ${data[i].prenom}`,
               numero: data[i].numero,
               frais: data[i].compte_agent_collecteur + data[i].total_cotisation,
-              somme: `${data[i].compte_agent_collecteur + data[i].total_cotisation
-                }`,
+              somme: `${
+                data[i].compte_agent_collecteur + data[i].total_cotisation
+              }`,
               agence: data[i].agc_name,
               carnet_vendu: data[i].carnet_vendu,
               client: data[i].nbr_cli,
             });
-
 
             this.dataCollecteur_vente_jour.push({
               key: data[i].id,
               nom: `${data[i].nom} ${data[i].prenom}`,
               numero: data[i].numero,
               frais: data[i].compte_agent_collecteur + data[i].total_cotisation,
-              somme: `${data[i].compte_agent_collecteur + data[i].total_cotisation
-                }`,
+              somme: `${
+                data[i].compte_agent_collecteur + data[i].total_cotisation
+              }`,
               agence: data[i].agc_name,
               carnet_vendu_jour: data[i].carnet_vendu_jour,
               client: data[i].nbr_cli,
@@ -1098,14 +1290,20 @@ export default {
             return b.client - a.client;
           });
 
-          this.dataCollecteur_vente_jour = this.dataCollecteur_vente_jour.filter(value => value.carnet_vendu_jour > 0)
+          this.dataCollecteur_vente_jour =
+            this.dataCollecteur_vente_jour.filter(
+              (value) => value.carnet_vendu_jour > 0
+            );
           this.dataCollecteur_vente_jour.sort(function (a, b) {
             return b.carnet_vendu_jour - a.carnet_vendu_jour;
           });
 
-          this.dataCollecteur_vente_jour = this.dataCollecteur_vente_jour.slice(0, 10)
+          this.dataCollecteur_vente_jour = this.dataCollecteur_vente_jour.slice(
+            0,
+            10
+          );
 
-          console.log(this.dataCollecteur_vente_jour)
+          console.log(this.dataCollecteur_vente_jour);
         });
     },
 
@@ -1123,13 +1321,15 @@ export default {
           console.log(data);
           this.dataCarnet = [];
           for (let i = 0; i < 10; i++) {
-            this.dataCarnet.push(data[i]);
+            if (data[i]) {
+              this.dataCarnet.push(data[i]);
+            }
           }
         });
     },
 
     listeCollecteur() {
-      this.load = true
+      this.loader = true;
       let session = localStorage;
       this.token_admin = session.getItem("token");
 
@@ -1141,10 +1341,15 @@ export default {
           (response) => {
             let data = response.body.data;
 
-            this.dataC = data
-            console.log(this.dataC.length)
-            this.getValueCollecteur(this.dataC[this.i].id)
+            console.log(data);
 
+            this.dataC = data;
+            console.log(this.dataC.length);
+            if (this.dataC.length != 0) {
+              this.getValueCollecteur(this.dataC[this.i].id);
+            } else {
+              this.loader = false;
+            }
           },
           (response) => {
             this.showAlert("error", "Erreur", response.body.message);
@@ -1154,60 +1359,66 @@ export default {
 
     relanchCollecter() {
       if (this.i < this.dataC.length - 1) {
-        this.i += 1
-        console.log(this.i)
+        this.i += 1;
+        console.log(this.i);
         setTimeout(() => {
-          this.getValueCollecteur(this.dataC[this.i].id)
+          this.getValueCollecteur(this.dataC[this.i].id);
         }, 2000);
       } else {
-        console.log('coooool')
-        console.log(this.dataC)
-        this.dataCollecteur_inactif = this.dataC.filter(value => parseInt(value.collecte_journalier) == 0 ? value : null);
-        this.dataCollecteur_actif = this.dataC.filter(value => parseInt(value.collecte_journalier) > 0 ? value : null);
-        this.dataCollecteur_actif.sort(function (a, b) {
-          return b.collecte_journalier - a.collecte_journalier;
-        })
-        this.nb_dataCollecteur_inactif = this.dataCollecteur_inactif.length
-        this.nb_dataCollecteur_actif = this.dataCollecteur_actif.length
-        let nbrC = this.dataCollecteur_actif.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue.collecte_journalier), 0)
-        console.log(nbrC)
-        this.stats[10].value = nbrC;
-        console.log(this.dataCollecteur_inactif)
-        console.log(this.dataCollecteur_actif)
-        this.load = false
+        console.log("coooool");
+        console.log(this.dataC);
+        this.dataCollecteur_inactif = this.dataC.filter((value) =>
+          parseInt(value.collecte_journalier) == 0 ? value : null
+        );
+        this.dataCollecteur_actif = this.dataC.filter((value) =>
+          parseInt(value.collecte_journalier) > 0 ? value : null
+        );
+        if (this.dataCollecteur_actif.length != 0) {
+          this.dataCollecteur_actif.sort(function (a, b) {
+            return b.collecte_journalier - a.collecte_journalier;
+          });
+        }
+        this.nb_dataCollecteur_inactif = this.dataCollecteur_inactif.length;
+        this.nb_dataCollecteur_actif = this.dataCollecteur_actif.length;
+        if (this.dataCollecteur_actif.length != 0) {
+          let nbrC = this.dataCollecteur_actif.reduce(
+            (accumulator, currentValue) =>
+              accumulator + parseInt(currentValue.collecte_journalier),
+            0
+          );
+          console.log(nbrC);
+          this.stats[10].value = nbrC;
+        }
+        this.loader = false;
+        console.log(this.loader);
       }
     },
 
-
     getValueCollecteur(id) {
-      console.log(id)
+      console.log(id);
       let session = localStorage;
       this.token_admin = session.getItem("token");
 
       let headers = { headers: { Authorization: this.token_admin } };
 
       this.$http
-        .post(
-          `${this.callback}/agent_collecteur/info/${id}`,
-          {},
-          headers
-        )
+        .post(`${this.callback}/agent_collecteur/info/${id}`, {}, headers)
         .then(
           (response) => {
             let data = response.body.data;
             console.log(data);
-            this.dataC[this.i].collecte_journalier = data.collecte_journalier
-            this.dataC[this.i].collecte_encour = data.compte_epargne + data.compte_produit
-            this.relanchCollecter()
+            this.dataC[this.i].collecte_journalier = data.collecte_journalier;
+            this.dataC[this.i].collecte_encour =
+              data.compte_epargne + data.compte_produit;
+            this.relanchCollecter();
           },
           (response) => {
             this.showAlert("error", "Erreur", response.body.message);
           }
         );
 
-      return null
+      return null;
     },
-
 
     showModal(idAgence) {
       this.load_m = true;
@@ -1217,34 +1428,51 @@ export default {
 
       let headers = { headers: { Authorization: this.token_admin } };
 
-      this.$http.post(`${this.callback}/transaction/agence/${idAgence}/0`, {}, headers).then(
-        (response) => {
-          let data = response.body.data;
-          console.log(data)
-          this.somme_deverse = 0
-          for (let i = 0; i < data.length; i++) {
-            let date_list = new Date(data[i].created_at)
-            let date = new Date()
-            if (date_list.getDate() == date.getDate() && date_list.getMonth() == date.getMonth() && date_list.getFullYear() == date.getFullYear()) {
-              console.log(" ------- date --------------------")
-              console.log(date_list)
-              console.log(date_list.getDate() + "/" + date_list.getMonth() + "/" + date_list.getFullYear())
-              console.log(date)
-              console.log(date.getDate() + "/" + date_list.getMonth() + "/" + date_list.getFullYear())
-              console.log(" ------- date --------------------")
-              this.somme_deverse += data[i].montant
+      this.$http
+        .post(`${this.callback}/transaction/agence/${idAgence}/0`, {}, headers)
+        .then(
+          (response) => {
+            let data = response.body.data;
+            console.log(data);
+            this.somme_deverse = 0;
+            for (let i = 0; i < data.length; i++) {
+              let date_list = new Date(data[i].created_at);
+              let date = new Date();
+              if (
+                date_list.getDate() == date.getDate() &&
+                date_list.getMonth() == date.getMonth() &&
+                date_list.getFullYear() == date.getFullYear()
+              ) {
+                console.log(" ------- date --------------------");
+                console.log(date_list);
+                console.log(
+                  date_list.getDate() +
+                    "/" +
+                    date_list.getMonth() +
+                    "/" +
+                    date_list.getFullYear()
+                );
+                console.log(date);
+                console.log(
+                  date.getDate() +
+                    "/" +
+                    date_list.getMonth() +
+                    "/" +
+                    date_list.getFullYear()
+                );
+                console.log(" ------- date --------------------");
+                this.somme_deverse += data[i].montant;
+              }
             }
+            setTimeout(() => {
+              this.load_m = false;
+            }, 1000);
+          },
+          (response) => {
+            this.showAlert("error", "Erreur", response.body.message);
           }
-          setTimeout(() => {
-            this.load_m = false
-          }, 1000);
-        },
-        (response) => {
-          this.showAlert("error", "Erreur", response.body.message);
-        }
-      );
+        );
     },
-
 
     handleOk(e) {
       this.visible = false;
@@ -1253,7 +1481,6 @@ export default {
     handleCancel(e) {
       this.visible = false;
     },
-
   },
 };
 </script>

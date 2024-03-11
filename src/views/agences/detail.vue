@@ -481,7 +481,22 @@
           </a-table>
         </a-card>
       </a-col>
-<!-- 
+
+      <a-col :span="24" :md="24" class="mb-24">
+        <a-card
+          :bordered="false"
+          class="header-solid h-full"
+          :bodyStyle="{ paddingTop: 0, paddingBottom: '16px' }"
+        >
+          <template #title>
+            <h6 class="font-semibold m-0">
+              Liste des retrait effectués a cette agence
+            </h6>
+          </template>
+          <a-table :columns="columns_r" :data-source="data_r"> </a-table>
+        </a-card>
+      </a-col>
+      <!-- 
       <a-col :span="24" :md="24" class="mb-24">
         <a-card
           :bordered="false"
@@ -563,9 +578,11 @@ export default {
       caissiers: [],
       data_carnet: [],
       columns: [],
+      columns_r: [],
       columns_carnet: [],
       data: [],
       data_c: [],
+      data_r: [],
       stats: [],
       transactionsData: [],
       agence: {},
@@ -626,12 +643,34 @@ export default {
 							<path fill-rule="evenodd" clip-rule="evenodd" d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18ZM11 5C11 4.44772 10.5523 4 10 4C9.44772 4 9 4.44772 9 5V5.09199C8.3784 5.20873 7.80348 5.43407 7.32398 5.75374C6.6023 6.23485 6 7.00933 6 8C6 8.99067 6.6023 9.76515 7.32398 10.2463C7.80348 10.5659 8.37841 10.7913 9.00001 10.908L9.00002 12.8492C8.60902 12.7223 8.31917 12.5319 8.15667 12.3446C7.79471 11.9275 7.16313 11.8827 6.74599 12.2447C6.32885 12.6067 6.28411 13.2382 6.64607 13.6554C7.20855 14.3036 8.05956 14.7308 9 14.9076L9 15C8.99999 15.5523 9.44769 16 9.99998 16C10.5523 16 11 15.5523 11 15L11 14.908C11.6216 14.7913 12.1965 14.5659 12.676 14.2463C13.3977 13.7651 14 12.9907 14 12C14 11.0093 13.3977 10.2348 12.676 9.75373C12.1965 9.43407 11.6216 9.20873 11 9.09199L11 7.15075C11.391 7.27771 11.6808 7.4681 11.8434 7.65538C12.2053 8.07252 12.8369 8.11726 13.254 7.7553C13.6712 7.39335 13.7159 6.76176 13.354 6.34462C12.7915 5.69637 11.9405 5.26915 11 5.09236V5Z" fill="#111827"/>
 						</svg>`,
       },
-      
+
       {
         title: "Sommes collectées",
         value: 0,
         prefix: "",
         suffix: "Fcfa",
+        icon: `<svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M8.43338 7.41784C8.58818 7.31464 8.77939 7.2224 9 7.15101L9.00001 8.84899C8.77939 8.7776 8.58818 8.68536 8.43338 8.58216C8.06927 8.33942 8 8.1139 8 8C8 7.8861 8.06927 7.66058 8.43338 7.41784Z" fill="#111827"/>
+							<path d="M11 12.849L11 11.151C11.2206 11.2224 11.4118 11.3146 11.5666 11.4178C11.9308 11.6606 12 11.8861 12 12C12 12.1139 11.9308 12.3394 11.5666 12.5822C11.4118 12.6854 11.2206 12.7776 11 12.849Z" fill="#111827"/>
+							<path fill-rule="evenodd" clip-rule="evenodd" d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18ZM11 5C11 4.44772 10.5523 4 10 4C9.44772 4 9 4.44772 9 5V5.09199C8.3784 5.20873 7.80348 5.43407 7.32398 5.75374C6.6023 6.23485 6 7.00933 6 8C6 8.99067 6.6023 9.76515 7.32398 10.2463C7.80348 10.5659 8.37841 10.7913 9.00001 10.908L9.00002 12.8492C8.60902 12.7223 8.31917 12.5319 8.15667 12.3446C7.79471 11.9275 7.16313 11.8827 6.74599 12.2447C6.32885 12.6067 6.28411 13.2382 6.64607 13.6554C7.20855 14.3036 8.05956 14.7308 9 14.9076L9 15C8.99999 15.5523 9.44769 16 9.99998 16C10.5523 16 11 15.5523 11 15L11 14.908C11.6216 14.7913 12.1965 14.5659 12.676 14.2463C13.3977 13.7651 14 12.9907 14 12C14 11.0093 13.3977 10.2348 12.676 9.75373C12.1965 9.43407 11.6216 9.20873 11 9.09199L11 7.15075C11.391 7.27771 11.6808 7.4681 11.8434 7.65538C12.2053 8.07252 12.8369 8.11726 13.254 7.7553C13.6712 7.39335 13.7159 6.76176 13.354 6.34462C12.7915 5.69637 11.9405 5.26915 11 5.09236V5Z" fill="#111827"/>
+						</svg>`,
+      },
+      {
+        title: "Retrait total",
+        value: 0,
+        prefix: "",
+        suffix: "Fcfa",
+        icon: `<svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M8.43338 7.41784C8.58818 7.31464 8.77939 7.2224 9 7.15101L9.00001 8.84899C8.77939 8.7776 8.58818 8.68536 8.43338 8.58216C8.06927 8.33942 8 8.1139 8 8C8 7.8861 8.06927 7.66058 8.43338 7.41784Z" fill="#111827"/>
+							<path d="M11 12.849L11 11.151C11.2206 11.2224 11.4118 11.3146 11.5666 11.4178C11.9308 11.6606 12 11.8861 12 12C12 12.1139 11.9308 12.3394 11.5666 12.5822C11.4118 12.6854 11.2206 12.7776 11 12.849Z" fill="#111827"/>
+							<path fill-rule="evenodd" clip-rule="evenodd" d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18ZM11 5C11 4.44772 10.5523 4 10 4C9.44772 4 9 4.44772 9 5V5.09199C8.3784 5.20873 7.80348 5.43407 7.32398 5.75374C6.6023 6.23485 6 7.00933 6 8C6 8.99067 6.6023 9.76515 7.32398 10.2463C7.80348 10.5659 8.37841 10.7913 9.00001 10.908L9.00002 12.8492C8.60902 12.7223 8.31917 12.5319 8.15667 12.3446C7.79471 11.9275 7.16313 11.8827 6.74599 12.2447C6.32885 12.6067 6.28411 13.2382 6.64607 13.6554C7.20855 14.3036 8.05956 14.7308 9 14.9076L9 15C8.99999 15.5523 9.44769 16 9.99998 16C10.5523 16 11 15.5523 11 15L11 14.908C11.6216 14.7913 12.1965 14.5659 12.676 14.2463C13.3977 13.7651 14 12.9907 14 12C14 11.0093 13.3977 10.2348 12.676 9.75373C12.1965 9.43407 11.6216 9.20873 11 9.09199L11 7.15075C11.391 7.27771 11.6808 7.4681 11.8434 7.65538C12.2053 8.07252 12.8369 8.11726 13.254 7.7553C13.6712 7.39335 13.7159 6.76176 13.354 6.34462C12.7915 5.69637 11.9405 5.26915 11 5.09236V5Z" fill="#111827"/>
+						</svg>`,
+      },
+      {
+        title: "Nombre retrait",
+        value: 0,
+        prefix: "",
+        suffix: "",
         icon: `<svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M8.43338 7.41784C8.58818 7.31464 8.77939 7.2224 9 7.15101L9.00001 8.84899C8.77939 8.7776 8.58818 8.68536 8.43338 8.58216C8.06927 8.33942 8 8.1139 8 8C8 7.8861 8.06927 7.66058 8.43338 7.41784Z" fill="#111827"/>
 							<path d="M11 12.849L11 11.151C11.2206 11.2224 11.4118 11.3146 11.5666 11.4178C11.9308 11.6606 12 11.8861 12 12C12 12.1139 11.9308 12.3394 11.5666 12.5822C11.4118 12.6854 11.2206 12.7776 11 12.849Z" fill="#111827"/>
@@ -661,6 +700,50 @@ export default {
         key: "Action",
         scopedSlots: { customRender: "operation" },
       },
+    ];
+
+    this.columns_r = [
+      {
+        title: "Date de creation",
+        dataIndex: "created_at",
+        key: "created_at",
+        scopedSlots: { customRender: "name" },
+      },
+      {
+        title: "Carnet",
+        dataIndex: "carnet",
+        key: "carnet",
+      },
+      {
+        title: "Agence",
+        dataIndex: "agence",
+        key: "agence",
+      },
+      {
+        title: "Caissier",
+        dataIndex: "agent",
+        key: "agent",
+      },
+      {
+        title: "Nom client",
+        dataIndex: "nom",
+        key: "nom",
+      },
+      {
+        title: "N° de téléphone",
+        dataIndex: "numero",
+        key: "numero",
+      },
+      {
+        title: "Montant (Fcfa)",
+        dataIndex: "montant",
+        key: "montant",
+      },
+      // {
+      //   title: "Action",
+      //   key: "Action",
+      //   scopedSlots: { customRender: "operation" },
+      // },
     ];
 
     this.columns_carnet = [
@@ -698,6 +781,7 @@ export default {
     ];
 
     this.detailAgence();
+    this.getListRetrait();
     this.listeCollecteur();
     this.listeCaissier();
     this.listeLivreur();
@@ -713,30 +797,12 @@ export default {
       });
     },
 
-    detailAgence() {
+    det1() {
       let session = localStorage;
       this.token_admin = session.getItem("token");
       this.type = session.getItem("type");
 
       let headers = { headers: { Authorization: this.token_admin } };
-
-      this.$http
-        .post(
-          `${this.callback}/agence/info/${this.$route.params.id}`,
-          {},
-          headers
-        )
-        .then(
-          (response) => {
-            let data = response.body.data;
-            this.agence = data;
-            this.ville = data.quartier.ville.libelle;
-            this.quartier = data.quartier.libelle;
-          },
-          (response) => {
-            this.showAlert("error", "Erreur", response.body.message);
-          }
-        );
 
       this.$http
         .post(
@@ -755,7 +821,17 @@ export default {
           }
         );
 
-        this.$http
+      this.det2();
+    },
+
+    det2() {
+      let session = localStorage;
+      this.token_admin = session.getItem("token");
+      this.type = session.getItem("type");
+
+      let headers = { headers: { Authorization: this.token_admin } };
+
+      this.$http
         .post(
           `${this.callback}/v2/agence/detail/${this.$route.params.id}`,
           {},
@@ -764,16 +840,25 @@ export default {
         .then(
           (response) => {
             let data = response.body.data;
-            console.log("------------------")
-            console.log(data)
-            console.log("-------------------")
-            this.stats[4].value = data.solde
+            console.log("------------------");
+            console.log(data);
+            console.log("-------------------");
+            this.stats[4].value = data.solde;
+
+            this.det3();
           },
           (response) => {
             this.showAlert("error", "Erreur", response.body.message);
           }
         );
+    },
 
+    det3() {
+      let session = localStorage;
+      this.token_admin = session.getItem("token");
+      this.type = session.getItem("type");
+
+      let headers = { headers: { Authorization: this.token_admin } };
 
       this.$http
         .post(
@@ -792,6 +877,16 @@ export default {
           }
         );
 
+      this.det4();
+    },
+
+    det4() {
+      let session = localStorage;
+      this.token_admin = session.getItem("token");
+      this.type = session.getItem("type");
+
+      let headers = { headers: { Authorization: this.token_admin } };
+
       this.$http
         .post(
           `${this.callback}/agence/${this.$route.params.id}/collecteur`,
@@ -803,6 +898,7 @@ export default {
             let data = response.body.data;
             this.stats[2].value = data.length;
             this.data = [];
+            this.det5();
             for (let i = data.length - 1; i >= 0; i--) {
               this.data.push({
                 key: data[i].id,
@@ -816,6 +912,14 @@ export default {
             this.showAlert("error", "Erreur", response.body.message);
           }
         );
+    },
+
+    det5() {
+      let session = localStorage;
+      this.token_admin = session.getItem("token");
+      this.type = session.getItem("type");
+
+      let headers = { headers: { Authorization: this.token_admin } };
 
       this.$http
         .post(
@@ -843,6 +947,82 @@ export default {
         );
     },
 
+    detailAgence() {
+      let session = localStorage;
+      this.token_admin = session.getItem("token");
+      this.type = session.getItem("type");
+
+      let headers = { headers: { Authorization: this.token_admin } };
+
+      this.$http
+        .post(
+          `${this.callback}/agence/info/${this.$route.params.id}`,
+          {},
+          headers
+        )
+        .then(
+          (response) => {
+            let data = response.body.data;
+            this.agence = data;
+            this.ville = data.quartier.ville.libelle;
+            this.quartier = data.quartier.libelle;
+
+            this.det1();
+          },
+          (response) => {
+            this.showAlert("error", "Erreur", response.body.message);
+          }
+        );
+    },
+
+    getListRetrait() {
+      let session = localStorage;
+      this.token_admin = session.getItem("token");
+
+      let headers = { headers: { Authorization: this.token_admin } };
+
+      this.$http
+        .post(
+          `${this.callback}/v4/list/retrait/by/agence`,
+          { id_agence: this.$route.params.id },
+          headers
+        )
+        .then(
+          (response) => {
+            let data = response.body.data;
+            this.stats[6].value = data.length;
+            this.data_r = [];
+            for (let i = data.length - 1; i >= 0; i--) {
+              this.data_r.push({
+                key: data[i].id,
+                montant: data[i].amount,
+                created_at: new Date(data[i].created_at).toLocaleString(),
+                agent: `${data[i].agent.nom} ${data[i].agent.prenom}`,
+                agence: data[i].agent.agence.nom_agence,
+                carnet: `${data[i].carnet.carnet.libelle}`,
+                nom: `${data[i].carnet.client.nom} ${data[i].carnet.client.prenom}`,
+                numero: `(+228) ${data[i].carnet.client.numero}`,
+              });
+            }
+          },
+          (response) => {
+            this.showAlert("error", "Erreur", response.body.message);
+          }
+        );
+
+      this.$http
+        .post(
+          `${this.callback}/v4/total/retire/by/agence`,
+          { id_agence: this.$route.params.id },
+          headers
+        )
+        .then((response) => {
+          let data = response.body.total;
+
+          this.stats[5].value = data;
+        });
+    },
+
     listeCollecteur() {
       let session = localStorage;
       this.token_admin = session.getItem("token");
@@ -850,7 +1030,7 @@ export default {
       let headers = { headers: { Authorization: this.token_admin } };
 
       this.$http
-        .post(`${this.callback}/agent_collecteur/list`, {}, headers)
+        .post(`${this.callback}/agent_collecteur/list?all=true`, {}, headers)
         .then(
           (response) => {
             let data = response.body.data;
@@ -871,17 +1051,15 @@ export default {
 
       let headers = { headers: { Authorization: this.token_admin } };
 
-      this.$http
-        .post(`${this.callback}/agent/superviseur/list`, {}, headers)
-        .then(
-          (response) => {
-            let data = response.body.data;
-            this.superviseurs = data;
-          },
-          (response) => {
-            this.showAlert("error", "Error", response.body.message);
-          }
-        );
+      this.$http.post(`${this.callback}/agent/list?all=true`, {}, headers).then(
+        (response) => {
+          let data = response.body.data;
+          this.superviseurs = data;
+        },
+        (response) => {
+          this.showAlert("error", "Error", response.body.message);
+        }
+      );
     },
 
     handleChange(value) {
@@ -1031,7 +1209,7 @@ export default {
 
       let headers = { headers: { Authorization: this.token_admin } };
 
-      this.$http.post(`${this.callback}/agent/list`, {}, headers).then(
+      this.$http.post(`${this.callback}/agent/list?all=true`, {}, headers).then(
         (response) => {
           let data = response.body.data;
           this.caissiers = data;
